@@ -1,12 +1,14 @@
 const express = require('express');
+const morgan = require('morgan');
+
+const tourRouter = require('./routes/toursRouter');
+const userRouter = require('./routes/userRouter');
 const app = express();
 
-const port = 3000;
+app.use(morgan('dev'));
+app.use(express.json());
 
-app.listen(port, () => {
-    console.log(`Listening to port ${port}`);
-})
+app.use('/api/v1/tours', tourRouter);
+app.use('/api/v1/users', userRouter);
 
-app.get('/', (req, res) => {
- res.status(200).json({ message: "Hello from server! ", app: "natours"});
-})
+module.exports = app;
