@@ -5,6 +5,8 @@ const tours = JSON.parse(
 );
 
 const checkID = (req, res, next, val) => {
+  console.log(`Tour id is: ${val}`);
+
   if (req.params.id * 1 >= tours.length) {
     return res.status(404).json({
       status: 'fail',
@@ -27,7 +29,7 @@ const checkBody = (req, res, next) => {
 const getAllTours = (req, res) => {
   res.status(200).json({
     status: 'success',
-    results: tours?.length,
+    results: tours.length,
     data: {
       tours,
     },
@@ -59,7 +61,7 @@ const createTour = (req, res) => {
   fs.writeFile(
     `${__dirname}/../dev-data/data/tours-simple.json`,
     JSON.stringify(tours),
-    (error) => {
+    () => {
       res.status(201).json({
         status: 'success',
         data: {
@@ -70,10 +72,28 @@ const createTour = (req, res) => {
   );
 };
 
+updateTour = (req, res) => {
+  res.status(200).json({
+    status: 'success',
+    data: {
+      tour: '<Updated tour here...>',
+    },
+  });
+};
+
+deleteTour = (req, res) => {
+  res.status(204).json({
+    status: 'success',
+    data: null,
+  });
+};
+
 module.exports = {
   createTour,
   getAllTours,
   getTour,
   checkID,
   checkBody,
+  updateTour,
+  deleteTour,
 };
